@@ -5,9 +5,6 @@ import headerLogo from '../images/logo.svg';
 
 
 class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        };
     render() {    
         return (
             <header className="header root__section">
