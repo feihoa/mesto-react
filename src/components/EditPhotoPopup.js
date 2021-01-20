@@ -11,7 +11,7 @@ class EditPhotoPopup extends React.Component {
     render(){
         return (
                 
-        <PopupWithForm isOpen={this.props.isOpen} name="EditPhotoPopup" title="Обновить аватар" children={
+        <PopupWithForm isOpen={this.props.isOpen} onClose={this.props.onClose} name="EditPhotoPopup" submitBtnTitle="Сохранить" title="Обновить аватар" children={
             <>             
             <input id="inputLinkPhoto" type="url" name="link" required minLength="2" className="popup__input popup__input_type_link-url_photo" placeholder="Ссылка на аватар"/>
             <span id="error-inputLinkPhoto" className="error"/>      

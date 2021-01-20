@@ -11,7 +11,7 @@ class AddCardPopup extends React.Component {
     render(){
         return (
                 
-        <PopupWithForm isOpen={this.props.isOpen} name="addCardPopup" title="Новое место" children={
+        <PopupWithForm isOpen={this.props.isOpen} onClose={this.props.onClose} name="addCardPopup" submitBtnTitle="+" title="Новое место" children={
             <>
                 <input id="inputName" type="text" name="name" required minLength="2" maxLength="30" className="popup__input popup__input_type_name" placeholder="Название"/>
                 <span id='error-inputName' className="error"/>

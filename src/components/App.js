@@ -33,15 +33,21 @@ handleEditAvatarClick = () => {
     this.setState({ isEditAvatarPopupOpen: true });
 
 };
+closeAllPopups = () => {
+    this.setState({ isAddPlacePopupOpen: false });
+    this.setState({ isEditProfilePopupOpen: false });
+    this.setState({ isEditAvatarPopupOpen: false });
+
+}
 
     render(){
         return (
             <>
             <Header />
             <Main onEditProfile={this.handleEditProfileClick} onAddPlace={this.handleAddPlaceClick} onEditAvatar={this.handleEditAvatarClick}/>
-            <AddCardPopup isOpen={this.state.isAddPlacePopupOpen}/>
-            <EditPopup isOpen={this.state.isEditProfilePopupOpen}/>
-            <EditPhotoPopup isOpen={this.state.isEditAvatarPopupOpen}/>
+            <AddCardPopup isOpen={this.state.isAddPlacePopupOpen} onClose={this.closeAllPopups}/>
+            <EditPopup isOpen={this.state.isEditProfilePopupOpen} onClose={this.closeAllPopups}/>
+            <EditPhotoPopup isOpen={this.state.isEditAvatarPopupOpen} onClose={this.closeAllPopups}/>
             <Footer />
             </>
         );

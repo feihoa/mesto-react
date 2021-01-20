@@ -11,7 +11,7 @@ class EditPopup extends React.Component {
     render(){
         return (
                 
-        <PopupWithForm isOpen={this.props.isOpen} name="editPopup" title="Редактировать профиль" children={
+        <PopupWithForm isOpen={this.props.isOpen} onClose={this.props.onClose} name="editPopup" submitBtnTitle="Сохранить" title="Редактировать профиль" children={
                <>
                 <input id="inputUserNameEdit" type="text" minLength="2" maxLength="30"  required name="userName" className="popup__input popup__input_type_userName" placeholder="Имя"/>
                 <span id="error-inputUserNameEdit" className="error"/>
