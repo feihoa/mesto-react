@@ -1,6 +1,6 @@
 import React from 'react';
 import consts from './consts';
-import Api from './Api';
+import Card from './Card';
 
 class Main extends React.Component {
     constructor(props) {
@@ -8,14 +8,15 @@ class Main extends React.Component {
  
 
         this.state = {
-            userName: "Имя",
-            userDescription:  "Описание",
-            userAvatar: '../images/avatar.jpg',
+            userName: "",
+            userDescription:  "",
+            userAvatar: "",
+            cards: [],
         };
         };
 
         componentDidMount() {
-            consts.api.getUserInfo().then(data => { console.log(data)
+            consts.api.getUserInfo().then(data => {
                 this.setState({ 
                     userName: data.name,
                     userDescription: data.about,
@@ -23,6 +24,12 @@ class Main extends React.Component {
                 });
 
             });
+            consts.api.getInitialCards().then(data => {
+                console.log(data)
+                this.setState({ 
+                    cards: data,
+                });
+            })
 
         }
 
@@ -30,19 +37,23 @@ class Main extends React.Component {
 render() {
 return (
     <>    
-    <div id='profileRoot' className="profile root__section">
-        <div className="user-info">
-            <div id = "userInfoPic" className="user-info__photo" style={{ backgroundImage: 'url(' + this.state.userAvatar + ')', cursor: "pointer"}}  onMouseUp={this.props.onEditAvatar}></div>
-            <div id="userInfoData" className="user-info__data">
-            <h1 id = "userInfoName" className="user-info__name">{this.state.userName}</h1>
-            <p id = "userInfoJob" className="user-info__job">{this.state.userDescription}</p>
-            <button id="userInfoEditButton" className="button user-info-edit__button" onMouseUp={this.props.onEditProfile}>Edit</button>
+        <div id='profileRoot' className="profile root__section">
+            <div className="user-info">
+                <div id = "userInfoPic" className="user-info__photo" style={{ backgroundImage: 'url(' + this.state.userAvatar + ')', cursor: "pointer"}}  onMouseUp={this.props.onEditAvatar}></div>
+                <div id="userInfoData" className="user-info__data">
+                <h1 id = "userInfoName" className="user-info__name">{this.state.userName}</h1>
+                <p id = "userInfoJob" className="user-info__job">{this.state.userDescription}</p>
+                <button id="userInfoEditButton" className="button user-info-edit__button" onMouseUp={this.props.onEditProfile}>Edit</button>
+                </div>
+                <button id="userInfoButton" className="button user-info__button" onMouseUp={this.props.onAddPlace}>+</button>
             </div>
-            <button id="userInfoButton" className="button user-info__button" onMouseUp={this.props.onAddPlace}>+</button>
         </div>
-    </div> 
-    <div id="placesList" className="places-list root__section"/>
-</>
+        <div id="placesList" className="places-list root__section">
+            {this.state.cards.map((card, key) => {
+              return  <Card card={card} key={key}/> 
+            })}
+        </div>
+    </>
     );
 }
 }

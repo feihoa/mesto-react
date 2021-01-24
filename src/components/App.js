@@ -1,11 +1,9 @@
 import React from 'react';
-// import './App.css';
 import Header from './Header';
 import Main from './Main';
 import AddCardPopup from './AddCardPopup';
 import EditPopup from './EditPopup';
 import EditPhotoPopup from './EditPhotoPopup';
-
 import Footer from './Footer';
 
 class App extends React.Component {
@@ -15,9 +13,13 @@ class App extends React.Component {
             isEditProfilePopupOpen: false,
             isAddPlacePopupOpen:  false,
             isEditAvatarPopupOpen: false,
+            selectedCard: "",
         };
     };
-
+// handleCardClick = (props) => {
+//     props.onCardClick(props.card);
+//     this.setState({ selectedCard: card });
+// }
     
 handleAddPlaceClick = () => {
  
