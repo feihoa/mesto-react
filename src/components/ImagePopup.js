@@ -9,10 +9,10 @@ class ImagePopup extends React.Component {
     render() {    
         return (
 
-            <div id="popupPic" className="popup popup__pic">
+            <div id="popupPic" className={`popup popup__pic ${this.props.card !== false ? 'popup_is-opened' : ''}`}>
                 <div className="popup__content popup__content_pic">
-                    <img id="popupPicOpen" className ="popup-pic__open" alt=""/>
-                    <img src={closePic} alt="" id="popupClosePic" className="popup__close"/>
+                    <img id="popupPicOpen" src={this.props.card.link} className ="popup-pic__open" alt=""/>
+                    <img src={closePic} onMouseUp={this.props.onClose} alt="" id="popupClosePic" className="popup__close"/>
                 </div>
             </div>
         );

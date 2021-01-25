@@ -50,7 +50,7 @@ return (
         </div>
         <div id="placesList" className="places-list root__section">
             {this.state.cards.map((card, key) => {
-              return  <Card card={card} key={key}/> 
+              return  <Card onCardClick={this.props.onCardClick} card={card} key={key}/> 
             })}
         </div>
     </>
