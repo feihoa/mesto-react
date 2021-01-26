@@ -25,7 +25,6 @@ class Main extends React.Component {
 
             });
             consts.api.getInitialCards().then(data => {
-                console.log(data)
                 this.setState({ 
                     cards: data,
                 });
