@@ -1,6 +1,6 @@
 import Api from './Api';
 
-const consts =  {
+const apiParams =  {
 
     api : new Api({
       baseUrl: 'https://nomoreparties.co/cohort9',
@@ -12,4 +12,5 @@ const consts =  {
 
 }
 
-export default consts;
+
+export default apiParams;
