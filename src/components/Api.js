@@ -46,8 +46,8 @@ export default class Api {
     }
 
     editProfile(name, about){
-      this.name = name.value;
-      this.about = about.value;
+      this.name = name;
+      this.about = about;
 
     return fetch(this.options.baseUrl + '/users/me', {
           method: 'PATCH',
@@ -66,6 +66,7 @@ export default class Api {
               return Promise.reject(` ${res.status}`);
         })
         .then((data) => {
+          console.log(data)
 
           return data;
         })                  
