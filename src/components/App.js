@@ -1,7 +1,6 @@
 import React from 'react';
 import apiParams from './apiParams';
 import {CurrentUserContext} from '../contexts/CurrentUserContext'
-import {CardsContext} from '../contexts/CardsContext'
 import Header from './Header';
 import Main from './Main';
 import AddCardPopup from './AddCardPopup';
@@ -20,6 +19,9 @@ function App()  {
  const [currentUser, setCurrentUser] = React.useState('');
  const [cards, setCards] = React.useState('');
 
+ const [buttonText, setButtonText] = React.useState('');
+
+
  React.useEffect(() => {
     api.getUserInfo().then(data => {
         setCurrentUser(data);
@@ -34,6 +36,7 @@ function App()  {
 
 
 const handleCardLike = (card) => {
+
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     !isLiked ?  api.likeCard(card._id).then((newCard) => {
       const newCards = cards.map((c) => c._id === card._id ? newCard : c);
@@ -73,6 +76,9 @@ const handleEditAvatarClick = () => {
 
 };
 const closeAllPopups = () => {
+    //смена надписи на кнопке
+    setButtonText('');
+
     setSelectedCard(false);
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -80,24 +86,32 @@ const closeAllPopups = () => {
 }
 
 const handleUpdateUser = (data) => {
-    
+    setButtonText('Загрузка...');
     api.editProfile(data.name, data.about).then(data => {
         setCurrentUser(data);
+
+        closeAllPopups();
+        
     });
-    closeAllPopups()
 }
 const handleUpdateAvatar = (data) => {
+    setButtonText('Загрузка...');
 
     api.updateAvatar(data.avatar).then(data => {
         setCurrentUser(data);
+
+        closeAllPopups();
     });
-    closeAllPopups()
 }
 const handleAddPlaceSubmit = (data) => {
+    setButtonText('Загрузка...');
+
     api.addCard(data.cardName, data.cardLink).then((newCard) => {
         setCards([...cards, newCard]);
+
+        closeAllPopups();
     }); 
-    closeAllPopups()
+    
 
 }
 
@@ -108,9 +122,9 @@ const handleAddPlaceSubmit = (data) => {
                 <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
                     onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
                 <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
-                <AddCardPopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddPlaceSubmit}/>
-                <EditPopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-                <EditPhotoPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
+                <AddCardPopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddPlaceSubmit} buttonText={buttonText}/>
+                <EditPopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} buttonText={buttonText}/>
+                <EditPhotoPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} buttonText={buttonText}/>
                 <Footer />
                 </CurrentUserContext.Provider>
             </>

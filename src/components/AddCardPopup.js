@@ -21,11 +21,12 @@ function AddCardPopup (props) {
             cardName,
             cardLink,
         });
+
     }
 
         return (
                 
-        <PopupWithForm onSubmit={handleSubmit} isOpen={props.isOpen} onClose={props.onClose} name="addCardPopup" submitBtnTitle="+" title="Новое место" children={
+        <PopupWithForm onSubmit={handleSubmit} isOpen={props.isOpen} onClose={props.onClose} name="addCardPopup" submitBtnTitle="+" title="Новое место" buttonText={props.buttonText} children={
             <>
                 <input id="inputName" type="text" name="name" required minLength="2" maxLength="30" onChange={handleChangeCardName} className="popup__input popup__input_type_name" placeholder="Название"/>
                 <span id='error-inputName' className="error"/>

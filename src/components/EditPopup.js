@@ -34,7 +34,7 @@ const currentUser = React.useContext(CurrentUserContext);
 
     return (
                 
-        <PopupWithForm onSubmit={handleSubmit} isOpen={props.isOpen} onClose={props.onClose} name="editPopup" submitBtnTitle="Сохранить" title="Редактировать профиль" children={
+        <PopupWithForm onSubmit={handleSubmit} isOpen={props.isOpen} onClose={props.onClose} name="editPopup" submitBtnTitle="Сохранить" title="Редактировать профиль" buttonText={props.buttonText} children={
             <>
                 <input id="inputUserNameEdit" type="text" minLength="2" maxLength="30" onChange={handleChangeName} required name="userName" className="popup__input popup__input_type_userName" placeholder="Имя"/>
                 <span id="error-inputUserNameEdit" className="error"/>
