@@ -98,10 +98,11 @@ const handleUpdateAvatar = (data) => {
     setButtonText('Загрузка...');
 
     api.updateAvatar(data.avatar).then(data => {
+        
         setCurrentUser(data);
 
         closeAllPopups();
-    });
+    })
 }
 const handleAddPlaceSubmit = (data) => {
     setButtonText('Загрузка...');
