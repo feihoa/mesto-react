@@ -17,7 +17,9 @@ function Card (props){
     }
 
     const handleDeleteClick = () => {
-        props.onCardDelete(props.card);
+        if(window.confirm("Вы действительно хотите удалить карточку?")){
+            props.onCardDelete(props.card);
+        }
     }
   
     return (
