@@ -10,7 +10,6 @@ function EditPhotoPopup (props) {
     const [avatar, setAvatar] = React.useState('');
     const [value, setValue] = React.useState('');
     const [error, setError] = React.useState('');
-    const [buttonDisabled, setButtonDisabled] = React.useState(false);
 
     const avatarRef = React.useRef();
 
@@ -18,33 +17,28 @@ function EditPhotoPopup (props) {
         setAvatar(currentUser.avatar);
     }, [currentUser]);
 
-
-
     const handleChange = (e) => {        
 
         setValue(e.target.value);
         setAvatar(e.target.value)
-        handleError(e);
+        setError(handleError(e));
 
     }
     const handleError = (e) => {
     
         if (e.target.value.length === 0) {
-            setError('Это обязательное поле');
-            setButtonDisabled(true);
+            return 'Это обязательное поле';
         }
         else if (!/^((ftp|http|https):\/\/)?(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9\-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/.test(e.target.value)) {
-            setError('Здесь должна быть ссылка');
-            setButtonDisabled(true);
+            return 'Здесь должна быть ссылка';
         } else {
-            setError('');
-            setButtonDisabled(false);
+            return '';
         }
       }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-      if(error === '' && value){
+      if(!error && value){
         props.onUpdateAvatar({
           avatar: avatarRef.current.value,
         });
@@ -54,7 +48,7 @@ function EditPhotoPopup (props) {
     }
         return (
                 
-        <PopupWithForm onSubmit={handleSubmit} isOpen={props.isOpen} onClose={props.onClose} name="EditPhotoPopup" submitBtnTitle="Сохранить" title="Обновить аватар"  buttonText={props.buttonText} buttonDisabled={buttonDisabled} children={
+        <PopupWithForm onSubmit={handleSubmit} isOpen={props.isOpen} onClose={props.onClose} name="EditPhotoPopup" submitBtnTitle="Сохранить" title="Обновить аватар"  buttonText={props.buttonText} buttonDisabled={!(!error && value)} children={
             <>             
             <input value={value} ref={avatarRef} onChange={handleChange} avatar={avatar} id="inputLinkPhoto" type="url" name="link" required minLength="2" className="popup__input popup__input_type_link-url_photo" placeholder="Ссылка на аватар"/>
             <span  id="error-inputLinkPhoto" className="error">{error}</span>      
