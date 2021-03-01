@@ -52,6 +52,8 @@ function AddCardPopup (props) {
                 cardName,
                 cardLink,
             });
+            setСardNameValue('');
+            setСardLinkValue('');
         }
     }
 

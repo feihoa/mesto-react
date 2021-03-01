@@ -1,4 +1,4 @@
-https://Maliiya.github.io/mesto-react/
+https://feihoa.github.io/mesto-react/
 
 
 # Getting Started with Create React App

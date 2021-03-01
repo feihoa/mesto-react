@@ -50,6 +50,8 @@ const currentUser = React.useContext(CurrentUserContext);
             name,
             about: description,
             });
+            setNameValue('');
+            setDescriptionValue('');
         }
     }
 
