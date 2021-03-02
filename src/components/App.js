@@ -1,5 +1,6 @@
 import React from 'react';
 import apiParams from './apiParams';
+import { AppContext } from './AppContext';
 import {CurrentUserContext} from '../contexts/CurrentUserContext'
 import Header from './Header';
 import Main from './Main';
@@ -118,6 +119,7 @@ const handleAddPlaceSubmit = (data) => {
 
         return (
             <>
+                {/* <AppContext.Provider value={{state: this.state, handleLogin: this.handleLogin}}> */}
                 <CurrentUserContext.Provider value={currentUser}>
                 <Header />
                 <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
@@ -128,6 +130,7 @@ const handleAddPlaceSubmit = (data) => {
                 <EditPhotoPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} buttonText={buttonText}/>
                 <Footer />
                 </CurrentUserContext.Provider>
+                {/* </ AppContext.Provider>  */}
             </>
         );
 }
