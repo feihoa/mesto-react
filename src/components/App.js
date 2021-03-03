@@ -1,7 +1,9 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import apiParams from './apiParams';
 import { AppContext } from './AppContext';
 import {CurrentUserContext} from '../contexts/CurrentUserContext'
+import Login from './Login'
 import Header from './Header';
 import Main from './Main';
 import AddCardPopup from './AddCardPopup';
@@ -10,7 +12,7 @@ import EditPhotoPopup from './EditPhotoPopup';
 import ImagePopup from './ImagePopup';
 import Footer from './Footer';
 
-function App()  {
+function App(props)  {
  const api = apiParams.api;
  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -21,19 +23,26 @@ function App()  {
  const [cards, setCards] = React.useState('');
 
  const [buttonText, setButtonText] = React.useState('');
+ const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+ 
+ const handleLogin = () => {
+    setIsLoggedIn(true);
+    getInitial();
+ }
+ const handleLogout = () => {
+    setIsLoggedIn(false);
+ }
+const getInitial = () =>{
+        api.getUserInfo().then(data => {
+            setCurrentUser(data);
+        });
 
-
- React.useEffect(() => {
-    api.getUserInfo().then(data => {
-        setCurrentUser(data);
-    });
-
-    api.getInitialCards().then(data => {
-        console.log(data)
-        setCards(data)
-    });
-
-}, []);
+        api.getInitialCards().then(data => {
+            console.log(data)
+            setCards(data)
+        });
+    
+};
 
 
 const handleCardLike = (card) => {
@@ -117,19 +126,30 @@ const handleAddPlaceSubmit = (data) => {
 
 }
 
+
         return (
             <>
                 {/* <AppContext.Provider value={{state: this.state, handleLogin: this.handleLogin}}> */}
-                <CurrentUserContext.Provider value={currentUser}>
-                <Header />
-                <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
-                    onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
-                <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
-                <AddCardPopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddPlaceSubmit} buttonText={buttonText}/>
-                <EditPopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} buttonText={buttonText}/>
-                <EditPhotoPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} buttonText={buttonText}/>
+                <Header isLoggedIn={isLoggedIn} onLogOut={handleLogout}/>
+                <BrowserRouter>
+                <Switch>
+                <Route exact path="/">
+                    {isLoggedIn ? <Redirect to="/user" /> : <Login onLogIn={handleLogin} />}
+                </Route>
+                <Route exact path="/user">
+                    {isLoggedIn ?
+                    <CurrentUserContext.Provider value={currentUser}>
+                        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
+                            onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
+                        <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
+                        <AddCardPopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddPlaceSubmit} buttonText={buttonText}/>
+                        <EditPopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} buttonText={buttonText}/>
+                        <EditPhotoPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} buttonText={buttonText}/>
+                    </CurrentUserContext.Provider> : <Redirect to="/" />}
+                </Route>
+                </Switch>
+                </BrowserRouter>
                 <Footer />
-                </CurrentUserContext.Provider>
                 {/* </ AppContext.Provider>  */}
             </>
         );
