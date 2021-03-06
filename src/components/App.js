@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
-import { BrowserRouter, Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import apiParams from './apiParams';
 import AuthChecker from './AuthChecker'
 import * as secretToken from './secretToken';
-import { AppContext } from './AppContext';
 import {CurrentUserContext} from '../contexts/CurrentUserContext'
 import Login from './Login'
 import Header from './Header';
@@ -27,23 +26,16 @@ function App(props)  {
  const [buttonText, setButtonText] = React.useState('');
  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
- const tokenCheck = () => {
-    // если у пользователя есть токен в localStorage,
-    // эта функция проверит валидность токена
-      const jwt = localStorage.getItem('jwt');
-    if (jwt && AuthChecker(jwt)){
-      // проверим токен
-                  // авторизуем пользователя
-        setIsLoggedIn(true);
-                      // обернём App.js в withRouter
-                      // так, что теперь есть доступ к этому методу
-            getContent();
-        
-      }
-  }
-
  useEffect(() => {
-    tokenCheck();
+
+    const jwt = localStorage.getItem('jwt');
+    if (jwt && AuthChecker(jwt)){
+
+        setIsLoggedIn(true);
+   
+          getContent();
+    
+  }
 
   });
 
@@ -154,7 +146,7 @@ const handleAddPlaceSubmit = (data) => {
             <>
                 {/* <AppContext.Provider value={{state: this.state, handleLogin: this.handleLogin}}> */}
                 <Header isLoggedIn={isLoggedIn} onLogOut={handleLogout}/>
-                <BrowserRouter>
+                <HashRouter>
                 <Switch>
                 <Route exact path="/">
                     {isLoggedIn ? <Redirect to="/user" /> : <Login onLogIn={handleLogin} />}
@@ -171,7 +163,7 @@ const handleAddPlaceSubmit = (data) => {
                     </CurrentUserContext.Provider> : <Redirect to="/" />}
                 </Route>
                 </Switch>
-                </BrowserRouter>
+                </HashRouter>
                 <Footer />
                 {/* </ AppContext.Provider>  */}
             </>

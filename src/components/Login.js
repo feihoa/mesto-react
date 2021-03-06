@@ -24,7 +24,6 @@ class Login extends React.Component {
       return;
     }
     this.props.history.push('/user');
-    console.log(this.props)
     this.props.onLogIn();
 
   }
