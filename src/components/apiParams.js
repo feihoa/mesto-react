@@ -1,11 +1,12 @@
 import Api from './Api';
+import * as secretToken from './secretToken';
 
 const apiParams =  {
 
     api : new Api({
       baseUrl: 'https://nomoreparties.co/cohort9',
       headers: {
-        authorization: '548c5797-a590-40d0-8f9e-48d758ca9ae7',
+        authorization: secretToken.secretToken,
         'Content-Type': 'application/json'
       }
     }),

@@ -8,8 +8,7 @@ function Header(props){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.onLogOut()
-        
+        props.onLogOut();
     }
         return (
             <header className="header root__section">

@@ -1,0 +1,1 @@
+export const secretToken = '548c5797-a590-40d0-8f9e-48d758ca9ae7'
